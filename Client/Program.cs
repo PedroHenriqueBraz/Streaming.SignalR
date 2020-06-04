@@ -22,11 +22,13 @@ namespace Client
 
             var cancellationTokenSource = new CancellationTokenSource();
 
-            var stream = connection.StreamAsync<int>("Counter", 10, 500, cancellationTokenSource.Token);
+            // var stream = connection.StreamAsync<int>("Counter", 10, 500, cancellationTokenSource.Token);
 
-            await foreach (var count in stream)
+             var stream = connection.StreamAsync<Server.Models.Measure>("Temperatures");
+
+            await foreach (var item in stream)
             {
-                Console.WriteLine($"{count}");
+                Console.WriteLine($"{item.tempo}");
             }
 
             Console.WriteLine("Streaming completed");

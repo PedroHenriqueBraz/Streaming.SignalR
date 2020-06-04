@@ -27,6 +27,7 @@ namespace Server
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSignalR();
+            services.AddCors();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -42,6 +43,14 @@ namespace Server
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseCors(builder =>
+            {
+                builder.WithOrigins("http://localhost:3000", "http://localhost:5000", "http://localhost:4200")
+                    .AllowAnyHeader()
+                    .AllowAnyMethod()
+                    .AllowCredentials();
+            });
 
             app.UseEndpoints(endpoints =>
             {
